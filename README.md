@@ -1,12 +1,9 @@
 # ysk_loadJS
 
 loading({
-			"bg": "img/background.png",				//如果要是使用图片    可用键可在js代码中使用
-			"hero": "img/herofly.png",
-			"bullet": "img/bullet2.png",
-			"enemy1": "img/enemy1.png",
-			"enemy2": "img/enemy2.png",
-			"enemy3": "img/enemy3.png"
+			"imgName": "***.png",				//如果要是使用图片    可用键可在js代码中使用
+			.....
+		
 		}, {
 			complete: main,
 			progress:pro
