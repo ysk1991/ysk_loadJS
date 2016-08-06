@@ -1,1 +1,57 @@
 # ysk_loadJS
+
+loading({
+			"bg": "img/background.png",				//如果要是使用图片    可用键可在js代码中使用
+			"hero": "img/herofly.png",
+			"bullet": "img/bullet2.png",
+			"enemy1": "img/enemy1.png",
+			"enemy2": "img/enemy2.png",
+			"enemy3": "img/enemy3.png"
+		}, {
+			complete: main,
+			progress:pro
+		});
+
+
+		function main(loadingImgs) {
+			$("#load").css("display","none");			//加载完成后隐藏load  开始游戏
+			//写游戏功能。。。
+		}
+
+		 function pro(bar){					//bar是进度变化的数字   可利用制作进度效果
+        	$("#load").html(bar+'%');				//写在一个load的div里  层级设置最高
+        }
+
+
+		//loading  游戏资源加载函数
+		function loading(imgs, obj) {
+
+			//用来装我们最后需要的所有图片对象的
+			var loadingImgs = {};
+			//获得到图片总量
+			var len = 0;
+			for (var keys in imgs) {
+				len++;
+			}
+//			console.log(len);					//6
+			var num = 0;			//加载完成的图片数量
+			for (var keys in imgs) {						//遍历每一张图片  创建一个img 然后放进去 循环遍历6次 6张都放进去
+				var imgObj = new Image();
+				imgObj.src = imgs[keys];						//				imgObj.src = imgs.bg = "img/background.png";
+				imgObj.onload = (function(keys) {
+					return function() {
+						num++;
+						loadingImgs[keys] = this;
+						var scale = (num / len).toFixed(2) * 100;
+						if (obj.progress) {
+							obj.progress(scale);				//显示进度  百分号在调用的时候自己加
+						}
+						if (num >= len) {
+							if (obj.complete) {
+								obj.complete(loadingImgs);				//显示图片的加载完成状态
+							}
+						}
+					}
+				})(keys)
+			}
+		}
